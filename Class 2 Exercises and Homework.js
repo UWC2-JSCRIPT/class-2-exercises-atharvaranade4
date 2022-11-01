@@ -25,7 +25,7 @@ console.log(person["favorite food"]);
 // -O-
 // -XO
 // X-X
-ttt = [['-','0','X'],['-','X','0'],['X','-', 'X']]
+ttt = [['-','0','-'],['-','X','0'],['X','-', 'X']]
 console.table(ttt)
 
 
@@ -45,12 +45,19 @@ console.table(ttt)
 // - Use rubular to check a few emails: https://rubular.com/
 // - Use regexp test method https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
 
-const myEmail = 'test @guy.com';
+const myEmail = ['foo@bar.baz', 'foo@barbaz', 'foobar.baz', 'foo@bar .baz', 'foo1 foo2@bar.baz'];
+for (let i = 0; i < myEmail.length; i++) {
 
-const emailRegex = new RegExp('/\w+([.-_]\w+)*@\w+([.-_]\w+)*\.\w{2,4}/g');
-const validEmail = emailRegex.test(myEmail);
-
-console.log(validEmail)
+  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  if(myEmail[i].match(emailRegex))
+    {
+      console.log("valid :", myEmail[i]);
+    }
+  else
+    {
+      console.log("not valid :", myEmail[i])
+    }
+}
 
 // 7. You are given an assignmentDate as a string in the format "month/day/year"
 // i.e. '1/21/2019' - but this could be any date.
@@ -62,7 +69,7 @@ console.log("current date is", currentDate);
 // 8. Create a new Date instance to represent the dueDate.  
 // This will be exactly 7 days after the assignment date.
 const dueDate = new Date(currentDate);
-dueDate.setDate(currentDate.getDate() + 7);
+constduedate = dueDate.setDate(currentDate.getDate() + 7);
 console.log("dueDate is ", dueDate);
 
 // 9. Use dueDate values to create an HTML time tag in format
@@ -91,6 +98,10 @@ let day = dueDate.toLocaleString("default", { day: "2-digit" });
 const datetime = year + "-" + month + "-" + day;
 
 console.log(datetime)
+
+//Extract index to be used to get month from months array
+const strMonthindex = month - 1
+console.log(`<time datetime =`, datetime ,`>`, months[strMonthindex], day, year,`</time>`)
 
 document.getElementById("date").innerHTML = datetime;
 
