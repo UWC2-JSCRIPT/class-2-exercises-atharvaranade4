@@ -106,23 +106,25 @@ const months = [
 ];
 
 //Get YYYY, MM, and DD from the date
-function BuildTimeTag(date){
-  const YYYY = dueDate.toLocaleString("default", { year: "numeric" });
-  const MM = dueDate.toLocaleString("default", { month: "2-digit" });
-  const DD = dueDate.toLocaleString("default", { day: "2-digit" });
+function BuildTimeTag(inputDate){
+  const YYYY = inputDate.toLocaleString("default", { year: "numeric" });
+  const MM = inputDate.toLocaleString("default", { month: "2-digit" });
+  const DD = inputDate.toLocaleString("default", { day: "2-digit" });
 
-  //get "Month"
-  const monthIndex = date.getMonth();
-  const dueMonth = months[monthIndex];
+  //get index on month
+  //Jan gives 0 ... Dec gives 11
+  const monthIndex = inputDate.getMonth();
+  //use index to extract Month from month[]
+  const Month = months[monthIndex];
 
   //Build time tag
-  const timeTag = `<time datetime="${YYYY}-${MM}-${DD}">${dueMonth} ${DD}, ${YYYY}</time>`
-  console.log(timeTag)
+  const timeTag = `<time datetime="${YYYY}-${MM}-${DD}">${Month} ${DD}, ${YYYY}</time>`
   return timeTag
 }
 
 // 10. log this value using console.log
 let timeTag = BuildTimeTag(dueDate)
+console.log(timeTag)
 
 //push value into HTML DOM
 document.getElementById("datetime__container").innerHTML = timeTag;
