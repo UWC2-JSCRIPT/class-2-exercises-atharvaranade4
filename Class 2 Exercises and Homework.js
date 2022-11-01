@@ -18,8 +18,8 @@ const person = {
 
 
 // 2. console.log best friend's firstName and your favorite food
-console.log(person.bestFriend.firstName);
-console.log(person["favorite food"]);
+console.log("My best friend's name is", person.bestFriend.firstName);
+console.log("My favorite food is",person["favorite food"]);
 
 // 3. Create an array to represent this tic-tac-toe board
 // -O-
@@ -45,13 +45,20 @@ console.table(ttt)
 // - Use rubular to check a few emails: https://rubular.com/
 // - Use regexp test method https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
 
-const myEmail = ['foo@bar.baz', 'foo@barbaz', 'foobar.baz', 'foo@bar .baz', 'foo1 foo2@bar.baz'];
+const myEmail = [
+  'foo@bar.baz', 
+  'foo@barbaz', 
+  'foobar.baz', 
+  'foo@bar .baz', 
+  'foo1 foo2@bar.baz'];
+
 for (let i = 0; i < myEmail.length; i++) {
 
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   if(myEmail[i].match(emailRegex))
     {
-      console.log("valid :", myEmail[i]);
+      console.log("valid :", myEmail[i])
+      
     }
   else
     {
@@ -62,15 +69,23 @@ for (let i = 0; i < myEmail.length; i++) {
 // 7. You are given an assignmentDate as a string in the format "month/day/year"
 // i.e. '1/21/2019' - but this could be any date.
 // Convert this string to a Date
+
 const assignmentDate = '1/21/2019';
-const currentDate = new Date(assignmentDate);
+//Split the date into year, month, day
+const dateSplit = assignmentDate.split('/')
+const year = dateSplit[2]
+const month = dateSplit[0] - 1
+const day = dateSplit[1]
+
+const currentDate = new Date(year, month, day);
 console.log("current date is", currentDate);
 
 // 8. Create a new Date instance to represent the dueDate.  
 // This will be exactly 7 days after the assignment date.
 const dueDate = new Date(currentDate);
-constduedate = dueDate.setDate(currentDate.getDate() + 7);
-console.log("dueDate is ", dueDate);
+const duedate = dueDate.setDate(currentDate.getDate() + 7);
+console.log("due Date is ", dueDate);
+
 
 // 9. Use dueDate values to create an HTML time tag in format
 // <time datetime="YYYY-MM-DD">Month day, year</time>
@@ -90,20 +105,24 @@ const months = [
   'December'
 ];
 
-//Get year, month, and day from the date
-let year = dueDate.toLocaleString("default", { year: "numeric" });
-let month = dueDate.toLocaleString("default", { month: "2-digit" });
-let day = dueDate.toLocaleString("default", { day: "2-digit" });
-// Generate yyyy-mm-dd date string
-const datetime = year + "-" + month + "-" + day;
+//Get YYYY, MM, and DD from the date
+function BuildTimeTag(date){
+  const YYYY = dueDate.toLocaleString("default", { year: "numeric" });
+  const MM = dueDate.toLocaleString("default", { month: "2-digit" });
+  const DD = dueDate.toLocaleString("default", { day: "2-digit" });
 
-console.log(datetime)
+  //get "Month"
+  const monthIndex = date.getMonth();
+  const dueMonth = months[monthIndex];
 
-//Extract index to be used to get month from months array
-const strMonthindex = month - 1
-console.log(`<time datetime =`, datetime ,`>`, months[strMonthindex], day, year,`</time>`)
-
-document.getElementById("date").innerHTML = datetime;
+  //Build time tag
+  const timeTag = `<time datetime="${YYYY}-${MM}-${DD}">${dueMonth} ${DD}, ${YYYY}</time>`
+  console.log(timeTag)
+  return timeTag
+}
 
 // 10. log this value using console.log
+let timeTag = BuildTimeTag(dueDate)
 
+//push value into HTML DOM
+document.getElementById("datetime__container").innerHTML = timeTag;
